@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.dalhousie.habit.viewmodel.home.DashboardViewModel" />
+
+        <variable
+            name="homeViewModel"
+            type="com.dalhousie.habit.viewmodel.home.HomeViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_background"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_welcome_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:fontWeight="700"
+                android:text="@{@string/txt_welcome + ` ` + viewModel.loggedInUserName}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Welcome user" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_today_goal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:text="@string/txt_today_goal"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintEnd_toEndOf="@id/tv_welcome_title"
+                app:layout_constraintStart_toStartOf="@id/tv_welcome_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_welcome_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_today_goal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/bg_today_goal"
+                android:paddingHorizontal="@dimen/_25sdp"
+                android:paddingVertical="@dimen/_18sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/tv_today_goal"
+                app:layout_constraintHeight_max="@dimen/_200sdp"
+                app:layout_constraintStart_toStartOf="@id/tv_today_goal"
+                app:layout_constraintTop_toBottomOf="@id/tv_today_goal"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_today_goal" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_empty_habit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="@string/txt_no_habit_for_today"
+                android:textColor="@color/app_text"
+                android:textSize="@dimen/_16ssp"
+                android:visibility="@{homeViewModel.isTodayGoalEmpty() ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@id/rv_today_goal"
+                app:layout_constraintEnd_toEndOf="@id/rv_today_goal"
+                app:layout_constraintStart_toStartOf="@id/rv_today_goal"
+                app:layout_constraintTop_toTopOf="@id/rv_today_goal"
+                tools:visibility="gone" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="@{homeViewModel.isLoadingTodayGoals() ? View.VISIBLE : View.GONE}"
+                app:indicatorColor="@color/app_background"
+                app:layout_constraintBottom_toBottomOf="@id/rv_today_goal"
+                app:layout_constraintEnd_toEndOf="@id/rv_today_goal"
+                app:layout_constraintStart_toStartOf="@id/rv_today_goal"
+                app:layout_constraintTop_toTopOf="@id/rv_today_goal"
+                app:trackColor="@color/white"
+                tools:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_go_to_previous_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:clickable="@{viewModel.hasStatisticsForPreviousMonth}"
+                android:onClick="@{() -> viewModel.goToPreviousMonthStatistics()}"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_chevron_left"
+                android:tint="@{viewModel.hasStatisticsForPreviousMonth ? @color/white : @color/white_o30}"
+                android:visibility="@{viewModel.isHabitStatisticsEmpty() ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="@id/rv_today_goal"
+                app:layout_constraintTop_toBottomOf="@id/rv_today_goal" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_go_to_next_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="@{viewModel.hasStatisticsForNextMonth}"
+                android:onClick="@{() -> viewModel.goToNextMonthStatistics()}"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_chevron_right"
+                android:tint="@{viewModel.hasStatisticsForNextMonth ? @color/white : @color/white_o30}"
+                android:visibility="@{viewModel.isHabitStatisticsEmpty() ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="@id/rv_today_goal"
+                app:layout_constraintTop_toTopOf="@id/iv_go_to_previous_month" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_current_month_and_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{viewModel.currentMonthYearString}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16ssp"
+                android:visibility="@{viewModel.isHabitStatisticsEmpty() ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@id/iv_go_to_previous_month"
+                app:layout_constraintEnd_toStartOf="@id/iv_go_to_next_month"
+                app:layout_constraintStart_toEndOf="@id/iv_go_to_previous_month"
+                app:layout_constraintTop_toTopOf="@id/iv_go_to_previous_month"
+                tools:text="November 2024" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_habit_statistics"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/bg_habit_statistics"
+                android:overScrollMode="never"
+                android:padding="@dimen/_10sdp"
+                android:visibility="@{viewModel.isHabitStatisticsEmpty() ? View.INVISIBLE : View.VISIBLE}"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/rv_today_goal"
+                app:layout_constraintStart_toStartOf="@id/rv_today_goal"
+                app:layout_constraintTop_toBottomOf="@id/iv_go_to_previous_month"
+                app:spanCount="7"
+                tools:itemCount="31"
+                tools:listitem="@layout/item_habit_statistics" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:gravity="center"
+                android:text="@string/txt_no_habit_statistics"
+                android:textColor="@color/app_secondary"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="@{(viewModel.isHabitStatisticsEmpty() &amp;&amp; !viewModel.isLoading) ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="@id/iv_go_to_next_month"
+                app:layout_constraintStart_toStartOf="@id/iv_go_to_previous_month"
+                app:layout_constraintTop_toBottomOf="@id/tv_current_month_and_year" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.dalhousie.habit.viewmodel.home.HabitViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_background">
+
+        <!-- Today's Goal Section -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_todays_goal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/today_s_goal"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_todays_goals"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="@dimen/_200sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_todays_goal"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_habit_todays_goal" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/txt_no_habit_for_today"
+            android:textColor="@color/app_secondary"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="@{viewModel.isTodayGoalEmpty() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="@id/tv_todays_goal"
+            app:layout_constraintTop_toBottomOf="@id/tv_todays_goal" />
+
+        <!-- My Habits Section -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_my_habits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:text="@string/my_habits"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_todays_goals" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_add_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:onClick="@{() -> viewModel.onAddHabitClick()}"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/add_habit"
+            android:textColor="@color/app_green"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_my_habits"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_my_habits" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_habits"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_habits"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_habit" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/txt_empty_habits"
+            android:textColor="@color/app_secondary"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="@{(viewModel.isHabitsEmpty() &amp;&amp; !viewModel.isLoading) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="@id/tv_my_habits"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_habits" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+            app:indicatorColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

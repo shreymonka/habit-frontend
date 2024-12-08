@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="selectedItem"
+            type="com.dalhousie.habit.enums.HomeBottomNavigationItem" />
+
+        <variable
+            name="clickHandler"
+            type="com.dalhousie.habit.ui.home_bottom_navigation.HomeBottomNavigation.ClickHandler" />
+
+        <import type="com.dalhousie.habit.enums.HomeBottomNavigationItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_background">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bottom_navigation"
+            android:paddingVertical="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_dashboard"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:isSelected="@{selectedItem == HomeBottomNavigationItem.DASHBOARD}"
+                android:src="@drawable/ic_home"
+                app:layout_constraintEnd_toStartOf="@id/btn_search"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@drawable/ic_home_selected" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_dashboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="@string/txt_home"
+                android:textColor="@{selectedItem == HomeBottomNavigationItem.DASHBOARD ? @color/app_text : @color/app_secondary}"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/btn_dashboard"
+                app:layout_constraintStart_toStartOf="@id/btn_dashboard"
+                app:layout_constraintTop_toBottomOf="@id/btn_dashboard"
+                tools:textColor="@color/app_text" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:onClick="@{() -> clickHandler.onItemClicked(HomeBottomNavigationItem.DASHBOARD)}"
+                app:layout_constraintBottom_toBottomOf="@id/tv_dashboard"
+                app:layout_constraintEnd_toEndOf="@id/tv_dashboard"
+                app:layout_constraintStart_toStartOf="@id/tv_dashboard"
+                app:layout_constraintTop_toTopOf="@id/btn_dashboard" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_search"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:isSelected="@{selectedItem == HomeBottomNavigationItem.SEARCH}"
+                android:onClick="@{() -> clickHandler.onItemClicked(HomeBottomNavigationItem.SEARCH)}"
+                android:src="@drawable/ic_search"
+                app:layout_constraintEnd_toStartOf="@id/btn_habit"
+                app:layout_constraintStart_toEndOf="@id/btn_dashboard"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="@string/txt_search"
+                android:textColor="@{selectedItem == HomeBottomNavigationItem.SEARCH ? @color/app_text : @color/app_secondary}"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/btn_search"
+                app:layout_constraintStart_toStartOf="@id/btn_search"
+                app:layout_constraintTop_toBottomOf="@id/btn_search"
+                tools:textColor="@color/app_secondary" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:onClick="@{() -> clickHandler.onItemClicked(HomeBottomNavigationItem.SEARCH)}"
+                app:layout_constraintBottom_toBottomOf="@id/tv_search"
+                app:layout_constraintEnd_toEndOf="@id/tv_search"
+                app:layout_constraintStart_toStartOf="@id/tv_search"
+                app:layout_constraintTop_toTopOf="@id/btn_search" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_habit"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:isSelected="@{selectedItem == HomeBottomNavigationItem.HABIT}"
+                android:onClick="@{() -> clickHandler.onItemClicked(HomeBottomNavigationItem.HABIT)}"
+                android:src="@drawable/ic_habit"
+                app:layout_constraintEnd_toStartOf="@id/btn_setting"
+                app:layout_constraintStart_toEndOf="@id/btn_search"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_habit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="@string/txt_habit"
+                android:textColor="@{selectedItem == HomeBottomNavigationItem.HABIT ? @color/app_text : @color/app_secondary}"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/btn_habit"
+                app:layout_constraintStart_toStartOf="@id/btn_habit"
+                app:layout_constraintTop_toBottomOf="@id/btn_habit"
+                tools:textColor="@color/app_secondary" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:onClick="@{() -> clickHandler.onItemClicked(HomeBottomNavigationItem.HABIT)}"
+                app:layout_constraintBottom_toBottomOf="@id/tv_habit"
+                app:layout_constraintEnd_toEndOf="@id/tv_habit"
+                app:layout_constraintStart_toStartOf="@id/tv_habit"
+                app:layout_constraintTop_toTopOf="@id/btn_habit" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_setting"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:isSelected="@{selectedItem == HomeBottomNavigationItem.SETTINGS}"
+                android:onClick="@{() -> clickHandler.onItemClicked(HomeBottomNavigationItem.SETTINGS)}"
+                android:src="@drawable/ic_settings"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_habit"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="@string/txt_settings"
+                android:textColor="@{selectedItem == HomeBottomNavigationItem.SETTINGS ? @color/app_text : @color/app_secondary}"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/btn_setting"
+                app:layout_constraintStart_toStartOf="@id/btn_setting"
+                app:layout_constraintTop_toBottomOf="@id/btn_setting"
+                tools:textColor="@color/app_secondary" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:onClick="@{() -> clickHandler.onItemClicked(HomeBottomNavigationItem.SETTINGS)}"
+                app:layout_constraintBottom_toBottomOf="@id/tv_settings"
+                app:layout_constraintEnd_toEndOf="@id/tv_settings"
+                app:layout_constraintStart_toStartOf="@id/tv_settings"
+                app:layout_constraintTop_toTopOf="@id/btn_setting" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

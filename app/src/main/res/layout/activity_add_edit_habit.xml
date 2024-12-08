@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.dalhousie.habit.viewmodel.home.AddEditHabitViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_background"
+        tools:context=".ui.home.AddEditHabitActivity">
+
+        <include
+            android:id="@+id/inc_header"
+            layout="@layout/layout_authentication_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onBackClick="@{()->viewModel.onBackClick()}"
+            app:showLogo="@{false}"
+            app:title="@{viewModel.isEditMode() ? @string/edit_habit : @string/add_habit}" />
+
+        <!-- Habit Name Input -->
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_habit_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/bg_text_input"
+            android:hint="@string/habit_name"
+            android:padding="16dp"
+            android:text="@={viewModel.habitName}"
+            android:textColor="@color/black"
+            android:textColorHint="@color/app_secondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inc_header" />
+
+        <!-- Days Selection Grid -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/days_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_habit_name">
+
+            <!-- First Row -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_mon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{viewModel.mondaySelected ? @drawable/bg_day_selected : @drawable/bg_day_unselected}"
+                android:onClick="@{() -> viewModel.onDayClick(0)}"
+                android:text="@string/mon"
+                android:textColor="@{viewModel.mondaySelected ? @color/app_text : @color/white}"
+                app:layout_constraintEnd_toStartOf="@id/btn_tue"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_tue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{viewModel.tuesdaySelected ? @drawable/bg_day_selected : @drawable/bg_day_unselected}"
+                android:onClick="@{() -> viewModel.onDayClick(1)}"
+                android:text="@string/tue"
+                android:textColor="@{viewModel.tuesdaySelected ? @color/black : @color/white}"
+                app:layout_constraintEnd_toStartOf="@id/btn_wed"
+                app:layout_constraintStart_toEndOf="@id/btn_mon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_wed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{viewModel.wednesdaySelected ? @drawable/bg_day_selected : @drawable/bg_day_unselected}"
+                android:onClick="@{() -> viewModel.onDayClick(2)}"
+                android:text="@string/wed"
+                android:textColor="@{viewModel.wednesdaySelected ? @color/black : @color/white}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_tue"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Second Row -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_thu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@{viewModel.thursdaySelected ? @drawable/bg_day_selected : @drawable/bg_day_unselected}"
+                android:onClick="@{() -> viewModel.onDayClick(3)}"
+                android:text="@string/thur"
+                android:textColor="@{viewModel.thursdaySelected ? @color/black : @color/white}"
+                app:layout_constraintEnd_toStartOf="@id/btn_fri"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_mon" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_fri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{viewModel.fridaySelected ? @drawable/bg_day_selected : @drawable/bg_day_unselected}"
+                android:onClick="@{() -> viewModel.onDayClick(4)}"
+                android:text="@string/fri"
+                android:textColor="@{viewModel.fridaySelected ? @color/black : @color/white}"
+                app:layout_constraintEnd_toStartOf="@id/btn_sat"
+                app:layout_constraintStart_toEndOf="@id/btn_thu"
+                app:layout_constraintTop_toTopOf="@id/btn_thu" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_sat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@{viewModel.saturdaySelected ? @drawable/bg_day_selected : @drawable/bg_day_unselected}"
+                android:onClick="@{() -> viewModel.onDayClick(5)}"
+                android:text="@string/sat"
+                android:textColor="@{viewModel.saturdaySelected ? @color/black : @color/white}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_fri"
+                app:layout_constraintTop_toTopOf="@id/btn_thu" />
+
+            <!-- Third Row -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_sun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@{viewModel.sundaySelected ? @drawable/bg_day_selected : @drawable/bg_day_unselected}"
+                android:onClick="@{() -> viewModel.onDayClick(6)}"
+                android:text="@string/sun"
+                android:textColor="@{viewModel.sundaySelected ? @color/black : @color/white}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_thu" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/cp_loading"
+            android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:padding="@dimen/_2sdp"
+            android:translationZ="@dimen/_2sdp"
+            app:indicatorColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_action"
+            app:layout_constraintTop_toBottomOf="@id/days_container"
+            app:trackColor="@color/app_background" />
+
+        <!-- Add/Edit Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_action"
+            style="@style/default_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:onClick="@{() -> viewModel.onActionButtonClick()}"
+            android:text="@{viewModel.isEditMode ? @string/edit : @string/add}"
+            app:layout_constraintBottom_toTopOf="@id/btn_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_delete"
+            style="@style/stroke_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_25sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:onClick="@{() -> viewModel.onDeleteClicked()}"
+            android:text="@string/txt_delete"
+            android:visibility="@{viewModel.isEditMode() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

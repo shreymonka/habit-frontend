@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.dalhousie.habit.data.remote.response.TodayHabitsResponse.Data.HabitAndStatus" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_7sdp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_habit_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{data.habit.name}"
+                android:textColor="@color/app_text"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/cb_habit_completed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1 Hour Kotlin learning" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_habit_completed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTintMode="@color/black"
+                android:checked="@{data.completed}"
+                android:enabled="false"
+                app:layout_constraintBottom_toBottomOf="@id/tv_habit_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_habit_name" />
+
+            <View
+                android:id="@+id/vw_checkbox_wrapper"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/cb_habit_completed"
+                app:layout_constraintEnd_toEndOf="@id/cb_habit_completed"
+                app:layout_constraintTop_toTopOf="@id/cb_habit_completed"
+                app:layout_constraintBottom_toBottomOf="@id/cb_habit_completed"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

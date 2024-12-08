@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.dalhousie.habit.viewmodel.home.UserDataViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_background"
+        android:paddingBottom="@dimen/_15sdp"
+        android:scrollbars="none"
+        tools:context=".ui.home.UserDataActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/inc_header"
+                layout="@layout/layout_authentication_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:onBackClick="@{() -> viewModel.onBackClick()}"
+                app:showLogo="@{false}"
+                app:title="@{``}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+                android:gravity="center"
+                android:text="@{viewModel.userData.userName}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inc_header"
+                tools:text="Vraj Shah" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_user_image"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@{viewModel.userData.profileImage}"
+                app:layout_constraintEnd_toEndOf="@id/tv_user_name"
+                app:layout_constraintStart_toStartOf="@id/tv_user_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_user_name"
+                tools:src="@drawable/ic_profile_0" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_habits"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:text="@string/txt_habits"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintEnd_toEndOf="@id/tv_user_name"
+                app:layout_constraintStart_toStartOf="@id/tv_user_name"
+                app:layout_constraintTop_toBottomOf="@id/iv_user_image" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_habits"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_max="@dimen/_350sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_habits"
+                tools:itemCount="10"
+                tools:listitem="@layout/item_habit" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="@string/txt_empty_habits"
+                android:textColor="@color/app_secondary"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="@{viewModel.userData.habits.empty ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="@id/tv_habits"
+                app:layout_constraintStart_toStartOf="@id/tv_habits"
+                app:layout_constraintTop_toBottomOf="@id/tv_habits" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.dalhousie.habit.viewmodel.authentication.SignUpViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_background"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_20sdp">
+
+            <include
+                android:id="@+id/inc_header"
+                layout="@layout/layout_authentication_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:onBackClick="@{() -> viewModel.onBackClick()}"
+                app:showLogo="@{true}"
+                app:title="@{@string/txt_sign_up}" />
+
+            <!-- Reset Password Input Block -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_input_block"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inc_header">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/username"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_username"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_text_input"
+                    android:hint="@string/enter_username"
+                    android:inputType="textCapWords"
+                    android:padding="16dp"
+                    android:text="@={viewModel.userName}"
+                    android:textColor="@color/app_text"
+                    android:textColorHint="@color/app_secondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/email"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_username" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_email"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_text_input"
+                    android:hint="@string/enter_email"
+                    android:inputType="textEmailAddress"
+                    android:padding="16dp"
+                    android:text="@={viewModel.email}"
+                    android:textColor="@color/app_text"
+                    android:textColorHint="@color/app_secondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_email" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_password"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/password"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_email" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_enter_password"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_text_input"
+                    android:hint="@string/enter_password"
+                    android:inputType="textPassword"
+                    android:padding="16dp"
+                    android:text="@={viewModel.password}"
+                    android:textColor="@color/app_text"
+                    android:textColorHint="@color/app_secondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_password" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_password_eye"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="18dp"
+                    android:onClick="@{() -> viewModel.onPasswordEyeClicked()}"
+                    android:src="@drawable/ic_eye"
+                    app:layout_constraintBottom_toBottomOf="@id/et_enter_password"
+                    app:layout_constraintEnd_toEndOf="@id/et_enter_password"
+                    app:layout_constraintTop_toTopOf="@id/et_enter_password" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_sign_up"
+                style="@style/default_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:clickable="@{!viewModel.isLoading()}"
+                android:onClick="@{() -> viewModel.onSignUpClicked()}"
+                android:text="@{viewModel.signupButtonText}"
+                app:layout_constraintEnd_toEndOf="@id/cl_input_block"
+                app:layout_constraintStart_toStartOf="@+id/cl_input_block"
+                app:layout_constraintTop_toBottomOf="@+id/cl_input_block" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/cp_loading"
+                showUnlessGone="@{!viewModel.isLoading()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:padding="@dimen/_2sdp"
+                android:translationZ="@dimen/_2sdp"
+                app:indicatorColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/btn_sign_up"
+                app:layout_constraintEnd_toEndOf="@id/btn_sign_up"
+                app:layout_constraintStart_toStartOf="@id/btn_sign_up"
+                app:layout_constraintTop_toTopOf="@id/btn_sign_up"
+                app:trackColor="@color/app_green" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
